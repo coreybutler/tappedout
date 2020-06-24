@@ -1,0 +1,27 @@
+{
+  "name": "tappedout",
+  "version": "0.0.1",
+  "description": "A simple \"back to basics\" JavaScript test runner for producing TAP-formatted results. Built using ES Modules.",
+  "main": "index.js",
+  "scripts": {
+    "test": "node tests/basic.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/coreybutler/tappedout.git"
+  },
+  "keywords": [
+    "TAP",
+    "test",
+    "anything",
+    "protocol",
+    "runner"
+  ],
+  "author": "Corey Butler",
+  "license": "MIT",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/coreybutler/tappedout/issues"
+  },
+  "homepage": "https://github.com/coreybutler/tappedout#readme"
+}
