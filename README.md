@@ -5,7 +5,7 @@ It is built using ES module syntax, drawing _inspiration_ from the [tape](https:
 
 **This is for library authors...**
 
-There are many beautiful test runners. They often come at the price of requiring many dependencies, which may be fine for a single complex project. I primarily write libraries, meaning lots of smaller repos containing small bits of code. The black hole of `node_modules` was way too heavy, and I grew very frustrated with pre-processing tests. Translation: my patience was tapped out with too many rollup/browserify processes, just for running sanity tests.
+There are many beautiful test runners. They often come at the price of requiring many dependencies, which may be fine for a single complex project. I primarily write libraries, meaning lots of smaller repos containing small bits of code. The black hole of `node_modules` was way too heavy when multipled across multiple projects, and I grew very frustrated with all the needless pre-processing/transpiling just to run tests. Translation: my patience was tapped out with one too many rollup/browserify processes.
 
 ## Getting tappedout
 
