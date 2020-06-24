@@ -25,7 +25,7 @@ import test from 'tappedout'
 
 #### Browser, Deno
 
-![Version](https://img.shields.io/github/v/tag/coreybutler/tappedout?label=Latest&style=for-the-badge)
+![Version](https://img.shields.io/npm/v/tappedout?label=Latest&style=for-the-badge)
 
 ```sh
 import test from 'https://cdn.pika.dev/tappedout^0.0.1' // <-- Update the version
