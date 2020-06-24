@@ -56,7 +56,7 @@ not ok 2 - I am still OK.
 
 _Alternative output formats:_
 
-TAP (Test Anything Protocol) is a language-agnostic format for documenting test results. As such, there are many different formatters. We made one, [tappedin](https://github.com/coreybutler.tappedin), that produces a spec output (similar to mocha), but anything capable of reading TAP output will do. It's actually pretty easy to create your own using [tap-parser](https://github.com/tapjs/tap-parser).
+TAP (Test Anything Protocol) is a language-agnostic format for documenting test results. However, there are many different formatters available if you search npm/github. It's actually pretty easy to create your own using [tap-parser](https://github.com/tapjs/tap-parser) or similar library.
 
 ## API
 
