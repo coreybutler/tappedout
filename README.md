@@ -58,12 +58,27 @@ _Alternative output formats:_
 
 TAP (Test Anything Protocol) is a language-agnostic format for documenting test results. However, there are many different formatters available if you search npm/github. It's actually pretty easy to create your own using [tap-parser](https://github.com/tapjs/tap-parser) or similar library.
 
-## API
+## Overview: How to Make Simple/Awesome Tests
+##### Really... you should read this section if you like making things easy on yourself.
 
-The following methods are available within a test suite:
+The API is very simple, yet very powerful. There are some simple design principles that can make the experience of testing way better though. Write less code, more naturally.
 
-#### comment (message)
+1. **Directives**
+    [TAP directives](https://testanything.org/tap-version-13-specification.html#directives) are special/optional "notes" in the output. There are only two options: `skip` and `todo`. These directives can easily be added/removed throughout the development lifecycle, making it easier to focus on the tests you care about. This is really helpful as your test suites grow. Many methods in this library support a directive option, and there are some special functions for applying directives in bulk (`test.only` and `test.skip`).<br/><br/>
+1. **Detailed Output**
+    Sometimes it is valuable to have detailed information about a particular test, such as info about why a test failed. The TAP protocol allows this to be [embedded in the output, via YAML](https://testanything.org/tap-version-13-specification.html#yaml-blocks). <br/><br/>
 
+    Many of the methods in this library will allow you to pass in a key/value (JSON) object that will be properly embedded in the output. 
+
+    - `failinfo()` and `expect()` autocreate detail objects.
+    - `info()` supports custom details.
+    - All assertion/response methods support custom detail objects, wherever you see "`object` detail" as a method parameter.<br/><br/>
+
+    A key usability feature of this library is the ability to add a **`DISPLAY_OUTPUT`** attribute to detail objects. By default, _passing tests do not output details_, while _non-passing tests do_. To override this behavior, make sure the detail object has an attribute called `DISPLAY_OUTPUT: true/false`.
+
+### API
+
+#### comment (`string` message [, `object` detail])
 
 ```javascript
 test('suite name', t => {
@@ -76,9 +91,9 @@ test('suite name', t => {
 # Comment goes here
 ```
 
-If the message is `null`, `undefined`, or blank, no comment will be generated.
+If the message is `null`, `undefined`, or blank, no output will be generated.
 
-#### pass (message, directive = null)
+#### pass (`string` message [, `string` directive, `object` detail])
 
 ```javascript
 test('suite name', t => {
@@ -93,7 +108,7 @@ ok 1 - Looks good
 
 The `directive` argument is optional. It accepts `todo` or `skip`.
 
-#### fail (message, directive = null)
+#### fail (`string` message [, `string` directive, `object` detail])
 
 ```javascript
 test('suite name', t => {
@@ -108,7 +123,7 @@ not ok 1 - Uh oh
 
 The `directive` argument is optional. It accepts `todo` or `skip`.
 
-#### failinfo (expected, actual, message, directive)
+#### failinfo (`any` expected, `any` actual, `string` message [, `string` directive])
 
 This is the same as the `fail` method, but it will output a detail message in YAML format (per the TAP spec).
 
@@ -132,7 +147,57 @@ not ok 1 - Should be equal
 1..1
 ```
 
-#### skip (msg)
+#### info (`object`)
+
+Additional test information can be embedded in TAP results via YAML. The info method accepts a valid key/value JSON object, which will be embedded in the output in YAML format.
+
+```javascript
+test('suite name', t => {
+  const passing = false
+
+  t.ok(passing, 'test description')
+  
+  if (!passing) {
+    t.info({
+      message: 'Detail',
+      got: {
+        mytest: {
+          result: false
+        }
+      },
+      expected: {
+        mytest: {
+          result: true
+        }
+      }
+    })
+  }
+  
+  t.end()
+})
+```
+
+```sh
+TAP version 13
+# suite name
+not ok 1 - test description
+  ---
+  message: Detail
+  got: {
+    "mytest": {
+      "result": false
+    }
+  }
+  expected: {
+    "mytest": {
+      "result": true
+    }
+  }
+  ...
+1..1
+```
+
+#### skip (`string` msg [, `object` detail])
 
 Skip the test. This serves primarily as a placeholder for conditional tests. To skip an entire test suite, see [test.skip](#test_skip) and [test.only](#test_only).
 
@@ -147,7 +212,7 @@ test('suite name', t => {
 ok 1 # skip Not relevant to this runtime
 ```
 
-#### todo (message, pass = true)
+#### todo (`string` message, [`boolean` pass = true, `object` detail])
 
 TODO items are a special directive in TAP. They always "pass", even if a test fails.
 
@@ -177,7 +242,7 @@ not ok # todo Rule the world
 
 _Remember_, these will still be considered "passing" tests, under the assumption something still needs to be done before they are actually part of the test suite.
 
-#### plan (count)
+#### plan (`integer` count)
 
 By specifying a plan count, it is possible to assure all of your tests run.
 
@@ -196,7 +261,7 @@ Bail out! Expected 1 test, 2 ran.
 
 If the plan count does not match the number of tests that actually run, tappedout will abort ("bail" in TAP terms) the entire process.
 
-#### ok (condition, msg, directive = null)
+#### ok (`boolean` condition, `string` message [, `string` directive])
 
 A simple assertion test, expecting a boolean result.
 
@@ -226,9 +291,9 @@ ok 1 # skip I expect to pass
 
 Supplying a directive is a good way to rapidly skip tests or identify things to be done later.
 
-#### throws (fn, msg, directive = null)
+#### throws (`function` fn, `string` message [, `string` directive])
 
-This method accepts a function and expects it to throw an error. 
+This method accepts a function and expects it to throw an error.
 
 ```javascript
 test('suite name', t => {
@@ -245,7 +310,7 @@ ok 1 - Error thrown when user supplies bad data
 
 It is possible to supply an optional `todo` or `skip` directive.
 
-#### doesNotThrow (fn, msg, directive = null)
+#### doesNotThrow (`function` fn, `string` message [, `string` directive])
 
 This method accepts a function and expects it **not** to throw an error.
 
@@ -265,7 +330,7 @@ _(notice this is `not ok`)_
 
 It is possible to supply an optional `todo` or `skip` directive.
 
-#### timeoutAfter (ms) {
+#### timeoutAfter (`integer` ms) {
 
 Specify a timeout period for the test suite.
 
@@ -279,7 +344,7 @@ test('suite name', t => {
 
 If the timeout is exceeded, the test runner will abort the entire process (bail out).
 
-#### expect (expected, actual, message, directive = null)
+#### expect (`any` expected, `any` actual, `string` message [, `string` directive])
 
 This is a special method which will compare the expected value to the actual value using a simple truthy/falsey check (i.e. `expected === actual`), just like the `ok` method. Unlike the `ok` method, this will output a YAML description of an error that occurs (uses `failinfo` internally). It is designed as a convenience method.
 
@@ -320,7 +385,7 @@ TAP version 13
 Bail out! Everybody PANIC!
 ```
 
-#### end () (REQUIRED)
+#### end () - ALWAYS REQUIRED
 
 ```javascript
 test('suite name', t => {
@@ -397,6 +462,40 @@ ok 1 - a-ok
 ```
 
 This method is very useful when a specific test within your suite breaks, allowing you to run just the tests you care about.
+
+## Specifying Details (Example)
+
+Providing custom detail is possible in several ways using special functions, but it is also possible to generate detailed output using any of the assertion methods. Assertion methods are those which "assert" whether a condition passes/fails. These methods include `pass()`, `fail()`, `ok()`, `throws()`, and `doesNotThrow()`.
+
+For convenience, it is also possible to supply details for `skip()`, `todo()`, and `comment()` methods.
+
+Here's an example of a basic "ok" assertion:
+
+```javascript
+test('suite name', t => {
+  t.ok(false, 'message', {
+    expected: 'my output',
+    actual: 'actual result',
+    hint: 'helpful information',
+    myCustomAttribute: 'my custom value'
+  })
+
+  t.end()
+})
+```
+
+```sh
+TAP version 13
+# suite name
+not ok 1 - message
+  ---
+  expected: my output
+  actual: actual result
+  hint: helpful information
+  myCustomAttribute: my custom value
+  ...
+1..1
+```
 
 ---
 
