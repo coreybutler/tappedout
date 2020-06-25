@@ -36,10 +36,10 @@ jobs:
           draft: false
           prerelease: ${{ steps.autotagger.outputs.prerelease == 'yes' }}
 
-      - uses: actions/setup-node@v1
-        if: steps.release.outputs.id != ''
-        with:
-          node-version: '14'
+      # - uses: actions/setup-node@v1
+      #   if: steps.release.outputs.id != ''
+      #   with:
+      #     node-version: '14'
 
       # - name: Build Release Artifacts
       #   if: success() && steps.release.outputs.id != ''
