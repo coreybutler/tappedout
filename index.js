@@ -19,7 +19,6 @@ async function run () {
   for (const test of tests) {
     await new Promise((resolve, reject) => {
       test[1](new TestSuite(test[0], resolve, reject, testid, test.length === 3 ? test[2] : null))
-      reject(new Error(`"${test[0] || 'Unlabeled'}" test suite did not call end()`))
     }).then(count => { testid += count })
       .catch(e => {
         console.log(`Bail out! ${e.message}`)

@@ -15,5 +15,5 @@ test('My Test Suite', t => {
   t.skip('Irrelevant')
   t.todo('Not implemented yet.')
 
-  t.end()
+  setTimeout(() => t.end(), 300)
 })

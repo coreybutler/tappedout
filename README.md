@@ -41,7 +41,6 @@ import test from 'tappedout'
 test('My Test Suite', t => {
   t.ok(true, 'I am OK.')
   t.ok(false, 'I am still OK.') // Expect a failure here!
-  t.end()
 })
 ```
 
@@ -83,7 +82,6 @@ The API is very simple, yet very powerful. There are some simple design principl
 ```javascript
 test('suite name', t => {
   t.comment('Comment goes here')
-  t.end()
 })
 ```
 
@@ -98,7 +96,6 @@ If the message is `null`, `undefined`, or blank, no output will be generated.
 ```javascript
 test('suite name', t => {
   t.pass('Looks good')
-  t.end()
 })
 ```
 
@@ -113,7 +110,6 @@ The `directive` argument is optional. It accepts `todo` or `skip`.
 ```javascript
 test('suite name', t => {
   t.pass('Uh oh')
-  t.end()
 })
 ```
 
@@ -130,7 +126,6 @@ This is the same as the `fail` method, but it will output a detail message in YA
 ```javascript
 test('suite name', t => {
   t.failinfo(1, 2, 'Should be equal')
-  t.end()
 })
 ```
 
@@ -172,8 +167,6 @@ test('suite name', t => {
       }
     })
   }
-  
-  t.end()
 })
 ```
 
@@ -204,7 +197,6 @@ Skip the test. This serves primarily as a placeholder for conditional tests. To 
 ```javascript
 test('suite name', t => {
   t.skip('Not relevant to this runtime')
-  t.end()
 })
 ```
 
@@ -219,7 +211,6 @@ TODO items are a special directive in TAP. They always "pass", even if a test fa
 ```javascript
 test('suite name', t => {
   t.todo('Rule the world')
-  t.end()
 })
 ```
 
@@ -232,7 +223,6 @@ To identify a "TODO" test that fails, specify the second optional argument:
 ```javascript
 test('suite name', t => {
   t.todo('Rule the world', false)
-  t.end()
 })
 ```
 
@@ -251,7 +241,6 @@ test('suite name', t => {
   t.plan(1)
   t.ok(true, 'passing')
   t.ok(true, 'I should not be here')
-  t.end()
 })
 ```
 
@@ -268,7 +257,6 @@ A simple assertion test, expecting a boolean result.
 ```javascript
 test('suite name', t => {
   t.ok(true, 'I expect to pass')
-  t.end()
 })
 ```
 
@@ -281,7 +269,6 @@ It is also possible to supply a directive, either `todo` or `skip`:
 ```javascript
 test('suite name', t => {
   t.ok(true, 'I expect to pass', 'skip')
-  t.end()
 })
 ```
 
@@ -300,7 +287,6 @@ test('suite name', t => {
   t.throws(() => {
     throw new Error('Bad input')
   }, 'Error thrown when user supplies bad data')
-  t.end()
 })
 ```
 
@@ -319,7 +305,6 @@ test('suite name', t => {
   t.throws(() => {
     throw new Error('Bad input')
   }, 'No problems')
-  t.end()
 })
 ```
 
@@ -351,7 +336,6 @@ This is a special method which will compare the expected value to the actual val
 ```javascript
 test('suite name', t => {
   t.expect(1, 2, 'Values should be the same')
-  t.end()
 })
 ```
 
@@ -375,7 +359,6 @@ Abort the process.
 ```javascript
 test('suite name', t => {
   t.bail('Everybody PANIC')
-  t.end()
 })
 ```
 
@@ -385,16 +368,16 @@ TAP version 13
 Bail out! Everybody PANIC!
 ```
 
-#### end () - ALWAYS REQUIRED
+#### end ()
+
+Call this method to explicitly end the test.
 
 ```javascript
 test('suite name', t => {
   t.ok(true, 'a-ok')
-  t.end()
+  myAsyncFunction(t.end) // Use as a callback
 })
 ```
-
-The `end` method is how the test runner determines when a test is done. this is particularly helpful for asynchronous operations. If this method is not specified, the test runner will abort/bail.
 
 ### Special Tests
 
@@ -407,7 +390,6 @@ This is the same as `test()`, but with the `skip` directive applied to every tes
 ```javascript
 test.skip('suite name', t => {
   t.ok(true, 'a-ok')
-  t.end()
 })
 ```
 
@@ -425,7 +407,6 @@ This is the same as `test()`, but with the `todo` directive applied to every tes
 ```javascript
 test.skip('suite name', t => {
   t.ok(true, 'a-ok')
-  t.end()
 })
 ```
 
@@ -443,12 +424,10 @@ This is the same as `test()`, but it tells the test runner to ignore all other t
 ```javascript
 test('suite name', t => {
   t.ok(true, 'did something')
-  t.end()
 })
 
 test.only('suite I care about', t => {
   t.ok(true, 'a-ok')
-  t.end()
 })
 ```
 
@@ -479,8 +458,6 @@ test('suite name', t => {
     hint: 'helpful information',
     myCustomAttribute: 'my custom value'
   })
-
-  t.end()
 })
 ```
 
