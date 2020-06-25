@@ -18,7 +18,16 @@ async function run () {
   // Run tests sequentially
   for (const test of tests) {
     await new Promise((resolve, reject) => {
-      test[1](new TestSuite(test[0], resolve, reject, testid, test.length === 3 ? test[2] : null))
+      const suite = new TestSuite(test[0], resolve, reject, testid, test.length === 3 ? test[2] : null)
+      try {
+        test[1](suite)
+      } catch (e) {
+        suite.fail(e.name, {
+          stack: '| \n  ' + e.stack
+        })
+        suite.end()
+        // reject(new Error(e))
+      }
     }).then(count => { testid += count })
       .catch(e => {
         console.log(`Bail out! ${e.message}`)

@@ -1,6 +1,7 @@
 import test from '../index.js'
 
 test('My Test Suite', t => {
+  t.timeoutAfter(1000) // change this to 100 to see the timeout in action
   t.ok(true, 'I am OK.')
   t.ok(false, 'I am still OK.') // Expect a failure here!
 
@@ -15,5 +16,8 @@ test('My Test Suite', t => {
   t.skip('Irrelevant')
   t.todo('Not implemented yet.')
 
-  setTimeout(() => t.end(), 300)
+  setTimeout(() => {
+    t.ok(true, 'Delayed method worked.')
+    t.end()
+  }, 300)
 })
