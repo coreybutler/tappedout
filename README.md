@@ -53,9 +53,9 @@ not ok 2 - I am still OK.
 1..2
 ```
 
-_Alternative output formats:_
+**_Alternative output formats:_**
 
-TAP (Test Anything Protocol) is a language-agnostic format for documenting test results. However, there are many different formatters available if you search npm/github. It's actually pretty easy to create your own using [tap-parser](https://github.com/tapjs/tap-parser) or a similar library.
+TAP (Test Anything Protocol) is a language-agnostic format for documenting test results. However, there are [many different formatters](https://github.com/search?l=JavaScript&q=tap+format&type=Repositories) available if you search npm/github. It's actually pretty easy to create your own using [tap-parser](https://github.com/tapjs/tap-parser) or a similar library.
 
 ## Overview: How to Make Simple/Awesome Tests
 ##### Really... you should read this section if you like making things easy on yourself.
@@ -75,9 +75,9 @@ The API is very simple, yet very powerful. There are some simple design principl
 
     A key usability feature of this library is the ability to add a **`DISPLAY_OUTPUT`** attribute to detail objects. By default, _passing tests do not output details_, while _non-passing tests do_. To override this behavior, make sure the detail object has an attribute called `DISPLAY_OUTPUT: true/false`.
 
-### API
+## API
 
-#### comment (`string` message [, `object` detail])
+### comment (`string` message [, `object` detail])
 
 ```javascript
 test('suite name', t => {
@@ -91,7 +91,7 @@ test('suite name', t => {
 
 If the message is `null`, `undefined`, or blank, no output will be generated.
 
-#### pass (`string` message [, `string` directive, `object` detail])
+### pass (`string` message [, `string` directive, `object` detail])
 
 ```javascript
 test('suite name', t => {
@@ -105,7 +105,7 @@ ok 1 - Looks good
 
 The `directive` argument is optional. It accepts `todo` or `skip`.
 
-#### fail (`string` message [, `string` directive, `object` detail])
+### fail (`string` message [, `string` directive, `object` detail])
 
 ```javascript
 test('suite name', t => {
@@ -119,7 +119,7 @@ not ok 1 - Uh oh
 
 The `directive` argument is optional. It accepts `todo` or `skip`.
 
-#### failinfo (`any` expected, `any` actual, `string` message [, `string` directive])
+### failinfo (`any` expected, `any` actual, `string` message [, `string` directive])
 
 This is the same as the `fail` method, but it will output a detail message in YAML format (per the TAP spec).
 
@@ -142,7 +142,7 @@ not ok 1 - Should be equal
 1..1
 ```
 
-#### info (`object`)
+### info (`object`)
 
 Additional test information can be embedded in TAP results via YAML. The info method accepts a valid key/value JSON object, which will be embedded in the output in YAML format.
 
@@ -190,7 +190,7 @@ not ok 1 - test description
 1..1
 ```
 
-#### skip (`string` msg [, `object` detail])
+### skip (`string` msg [, `object` detail])
 
 Skip the test. This serves primarily as a placeholder for conditional tests. To skip an entire test suite, see [test.skip](#test_skip) and [test.only](#test_only).
 
@@ -204,9 +204,9 @@ test('suite name', t => {
 ok 1 # skip Not relevant to this runtime
 ```
 
-#### todo (`string` message, [`boolean` pass = true, `object` detail])
+### todo (`string` message, [`boolean` pass = true, `object` detail])
 
-TODO items are a special directive in TAP. They always "pass", even if a test fails.
+TODO items are a special directive in TAP. They always "pass", even if a test fails, because they're [considered to be a work in progress](https://testanything.org/tap-version-13-specification.html#todo-tests).
 
 ```javascript
 test('suite name', t => {
@@ -232,7 +232,7 @@ not ok # todo Rule the world
 
 _Remember_, these will still be considered "passing" tests, under the assumption something still needs to be done before they are actually part of the test suite.
 
-#### plan (`integer` count)
+### plan (`integer` count)
 
 By specifying a plan count, it is possible to assure all of your tests run.
 
@@ -250,7 +250,7 @@ Bail out! Expected 1 test, 2 ran.
 
 If the plan count does not match the number of tests that actually run, tappedout will abort ("bail" in TAP terms) the entire process.
 
-#### ok (`boolean` condition, `string` message [, `string` directive])
+### ok (`boolean` condition, `string` message [, `string` directive])
 
 A simple assertion test, expecting a boolean result.
 
@@ -278,7 +278,7 @@ ok 1 # skip I expect to pass
 
 Supplying a directive is a good way to rapidly skip tests or identify things to be done later.
 
-#### throws (`function` fn, `string` message [, `string` directive])
+### throws (`function` fn, `string` message [, `string` directive])
 
 This method accepts a function and expects it to throw an error.
 
@@ -296,7 +296,7 @@ ok 1 - Error thrown when user supplies bad data
 
 It is possible to supply an optional `todo` or `skip` directive.
 
-#### doesNotThrow (`function` fn, `string` message [, `string` directive])
+### doesNotThrow (`function` fn, `string` message [, `string` directive])
 
 This method accepts a function and expects it **not** to throw an error.
 
@@ -315,7 +315,7 @@ _(notice this is `not ok`)_
 
 It is possible to supply an optional `todo` or `skip` directive.
 
-#### timeoutAfter (`integer` ms) {
+### timeoutAfter (`integer` ms) {
 
 Specify a timeout period for the test suite.
 
@@ -329,7 +329,7 @@ test('suite name', t => {
 
 If the timeout is exceeded, the test runner will abort the entire process (bail out).
 
-#### expect (`any` expected, `any` actual, `string` message [, `string` directive])
+### expect (`any` expected, `any` actual, `string` message [, `string` directive])
 
 This is a special method which will compare the expected value to the actual value using a simple truthy/falsey check (i.e. `expected === actual`), just like the `ok` method. Unlike the `ok` method, this will output a YAML description of an error that occurs (uses `failinfo` internally). It is designed as a convenience method.
 
@@ -352,7 +352,7 @@ not ok 1 - Values should be the same
 1..1
 ```
 
-#### bail (message)
+### bail (message)
 
 Abort the process.
 
@@ -368,7 +368,7 @@ TAP version 13
 Bail out! Everybody PANIC!
 ```
 
-#### end ()
+### end ()
 
 Call this method to explicitly end the test.
 
@@ -379,11 +379,11 @@ test('suite name', t => {
 })
 ```
 
-### Special Tests
+## Special Tests
 
 TAP supports two main directives, `skip` and `todo`. These test methods make it easy to define an entire test suite as being "skipped" or "todo". There is also an `only` method, which ignores all other test suites.
 
-#### test.skip()
+### test.skip()
 
 This is the same as `test()`, but with the `skip` directive applied to every test within the suite.
 
@@ -400,7 +400,7 @@ ok 1 # skip a-ok  <----- Notice "skip"
 1..1
 ```
 
-#### test.todo()
+### test.todo()
 
 This is the same as `test()`, but with the `todo` directive applied to every test within the suite.
 
@@ -417,7 +417,7 @@ ok 1 # todo a-ok  <----- Notice "todo"
 1..1
 ```
 
-#### test.only()
+### test.only()
 
 This is the same as `test()`, but it tells the test runner to ignore all other tests which are not created using `test.only()`.
 

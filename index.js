@@ -4,7 +4,7 @@ import TestSuite from './lib/suite.js'
 
 if (!initialized) {
   ref.set('initialized', true)
-  setTimeout(run, 0)
+  setTimeout(run, 300)
 }
 
 let testid = 0
@@ -22,7 +22,7 @@ async function run () {
       try {
         test[1](suite)
       } catch (e) {
-        suite.fail(e.name, {
+        suite.fail(e.stack.split('\n')[0].trim(), {
           stack: '| \n  ' + e.stack
         })
         suite.end()
@@ -36,7 +36,7 @@ async function run () {
   }
 
   // Output the final plan on "next tick"
-  setTimeout(() => console.log(`1..${testid}`), 0)
+  console.log(`1..${testid}`)
 }
 
 export { test as default, test }
