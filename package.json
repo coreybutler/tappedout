@@ -1,6 +1,6 @@
 {
   "name": "tappedout",
-  "version": "1.0.0-alpha.4",
+  "version": "1.0.0-alpha.5",
   "description": "A simple \"back to basics\" JavaScript test runner for producing TAP-formatted results. Built using ES Modules.",
   "main": "index.js",
   "scripts": {
