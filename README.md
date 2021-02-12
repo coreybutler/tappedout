@@ -109,7 +109,7 @@ The `directive` argument is optional. It accepts `todo` or `skip`.
 
 ```javascript
 test('suite name', t => {
-  t.pass('Uh oh')
+  t.fail('Uh oh')
 })
 ```
 
