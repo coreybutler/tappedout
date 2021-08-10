@@ -12,14 +12,33 @@ jobs:
     steps:
         # Checkout the updated source code
       - uses: actions/checkout@v2
-      
+
+      # Setup Node
+      - uses: actions/setup-node@v1
+        if: steps.release.outputs.id != ''
+        with:
+          node-version: '16'
+
+      # Run tests
+      - name: Test
+        run: |
+          npm test
+
         # If the version has changed, create a new git tag for it.
       - name: Tag
+        if: success()
         id: autotagger
         uses: butlerlogic/action-autotag@stable
         with:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-      
+
+        # If the new version/tag is a pre-release (i.e. 1.0.0-beta.1), create
+        # an environment variable indicating it is a prerelease.
+      - name: Pre-release
+        if: steps.autotagger.outputs.tagname != ''
+        run: |
+          if [[ "${{ steps.autotagger.output.version }}" == *"-"* ]]; then echo "::set-env IS_PRERELEASE=true";else echo "::set-env IS_PRERELEASE=''";fi
+
         # Create a github release
         # This will create a snapshot of the module,
         # available in the "Releases" section on Github.
@@ -36,11 +55,6 @@ jobs:
           draft: false
           prerelease: ${{ steps.autotagger.outputs.prerelease == 'yes' }}
 
-      # - uses: actions/setup-node@v1
-      #   if: steps.release.outputs.id != ''
-      #   with:
-      #     node-version: '14'
-
       # - name: Build Release Artifacts
       #   if: success() && steps.release.outputs.id != ''
       #   id: build
@@ -50,7 +64,7 @@ jobs:
       #     for d in .dist/*/*/ ; do tar -cvzf ${d%%/}-${{ steps.autotagger.outputs.tagname }}.tar.gz ${d%%}*; done;
       #     ls -l ./.dist/node
       #     ls -l ./.dist/browser
-    
+
       # - name: Upload Release Artifacts
       #   if: success() && steps.release.outputs.id != ''
       #   uses: AButler/upload-release-assets@v2.0
@@ -60,7 +74,7 @@ jobs:
       #     release-tag: ${{ steps.autotagger.outputs.tagname }}
 
         # Use this action to publish a single module to npm.
-      - name: Publish
+      - name: Publish to npm
         id: publish
         if: success() && steps.autotagger.outputs.tagcreated == 'yes' && steps.release.outputs.id != ''
         uses: author/action-publish@stable
