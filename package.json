@@ -4,7 +4,8 @@
   "description": "A simple \"back to basics\" JavaScript test runner for producing TAP-formatted results. Built using ES Modules.",
   "main": "index.js",
   "scripts": {
-    "test": "node tests/basic.js"
+    "test": "node tests/basic.js",
+    "test:deno": "deno run tests/basic.js"
   },
   "repository": {
     "type": "git",

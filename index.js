@@ -9,7 +9,7 @@ if (!initialized) {
 
 let testid = 0
 
-async function run () {
+async function run() {
   const tests = ref.get('tests') || []
   const logger = ref.get('logger') || console
 
@@ -33,7 +33,14 @@ async function run () {
     }).then(count => { testid += count })
       .catch(e => {
         logger.log(`Bail out! ${e.message}`)
-        process.exit(1)
+
+        if (process.exit) {
+          process.exit(1)
+        } else if (Deno?.exit) {
+          Deno.exit(1)
+        } else {
+          throw ''
+        }
       })
   }
 
