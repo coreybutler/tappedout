@@ -34,12 +34,14 @@ async function run() {
       .catch(e => {
         logger.log(`Bail out! ${e.message}`)
 
-        if (process.exit) {
+        try {
           process.exit(1)
-        } else if (Deno?.exit) {
-          Deno.exit(1)
-        } else {
-          throw ''
+        } catch (e) {
+          try {
+            Deno.exit(1)
+          } catch (e) {
+            throw ''
+          }
         }
       })
   }
