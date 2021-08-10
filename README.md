@@ -1,5 +1,6 @@
 # tappedout
-A simple "back to basics" JavaScript test runner for producing [TAP-formatted](https://testanything.org) results. 
+
+A simple "back to basics" JavaScript test runner for producing [TAP-formatted](https://testanything.org) results.
 
 It is built using ES module syntax, drawing _inspiration_ from the [tape](https://github.com/substack/tape) library. It shares several similarities, but should not be considered "the same".
 
@@ -14,11 +15,13 @@ There are many beautiful test runners. They often come at the price of requiring
 This library only supports versions of Node with ES Module support. This is available in Node 12 & 13 using the `--experimental-modules` flag. It is a native feature in Node 14+ (no flag needed). All versions need to specify `"type": "module"` in the `package.json` file.
 
 _Obtaining the module:_
+
 ```sh
 npm i tappedout --save-dev
 ```
 
 _Implementing it in Node:_
+
 ```javascript
 import test from 'tappedout'
 ```
@@ -45,6 +48,7 @@ test('My Test Suite', t => {
 ```
 
 **Output:**
+
 ```sh
 TAP version 13
 # My Test Suite
@@ -57,23 +61,39 @@ not ok 2 - I am still OK.
 
 TAP (Test Anything Protocol) is a language-agnostic format for documenting test results. However, there are [many different formatters](https://github.com/search?l=JavaScript&q=tap+format&type=Repositories) available if you search npm/github. It's actually pretty easy to create your own using [tap-parser](https://github.com/tapjs/tap-parser) or a similar library.
 
+TAP producers generally output to stdout/stderr (console). However, there are some circumstances where an alternative output mechanism is desired. The `tappedout` library supports overriding the default output mechanism. For example, to use a custom handler, set the logger as:
+
+```javascript
+import test from 'tappedout'
+
+test.logger = function () {
+  // Prefix 'TAP:' to every line
+  console.log(`TAP:`, ...arguments)
+}
+
+test('title', t => { ... }})
+```
+
+The most common reason for overriding the output mechanism is for writing results to a file.
+
 ## Overview: How to Make Simple/Awesome Tests
+
 ##### Really... you should read this section if you like making things easy on yourself.
 
-The API is very simple, yet very powerful. There are some simple design principles that can make the experience of testing way better though. Write less code, more naturally.
+The API is very simple, yet very powerful. There are some simple design principles that can make the experience of testing great. Write less code, more naturally.
 
 1. **Directives**
-    [TAP directives](https://testanything.org/tap-version-13-specification.html#directives) are special/optional "notes" in the output. There are only two options: `skip` and `todo`. These directives can easily be added/removed throughout the development lifecycle, making it easier to focus on the tests you care about. This is really helpful as your test suites grow. Many methods in this library support a directive option, and there are some special functions for applying directives in bulk (`test.only` and `test.skip`).<br/><br/>
-1. **Detailed Output**
-    Sometimes it is valuable to have detailed information about a particular test, such as info about why a test failed. The TAP protocol allows this to be [embedded in the output, via YAML](https://testanything.org/tap-version-13-specification.html#yaml-blocks). <br/><br/>
+   [TAP directives](https://testanything.org/tap-version-13-specification.html#directives) are special/optional "notes" in the output. There are only two options: `skip` and `todo`. These directives can be added/removed throughout the development lifecycle, making it easier to focus on the tests that matter. This can be really helpful as test suites grow. Many methods in this library support a directive option, and there are some special functions for applying directives in bulk (`test.only` and `test.skip`).`<br/><br/>`
+2. **Detailed Output**
+   Sometimes it is valuable to have detailed information about a particular test, such as info about why a test failed. The TAP protocol allows this to be [embedded in the output, via YAML](https://testanything.org/tap-version-13-specification.html#yaml-blocks). `<br/><br/>`
 
-    Many of the methods in this library will allow you to pass in a key/value (JSON) object that will be properly embedded in the output. 
+   Many of the methods in this library support key/value (JSON) arguments that will be properly embedded in the output.
 
-    - `failinfo()` and `expect()` autocreate detail objects.
-    - `info()` supports custom details.
-    - All assertion/response methods support custom detail objects, wherever you see "`object` detail" as a method parameter.<br/><br/>
+   - `failinfo()` and `expect()` autocreate detail objects.
+   - `info()` supports custom details.
+   - All assertion/response methods support custom detail objects, wherever you see "`object` detail" as a method parameter.`<br/><br/>`
 
-    A key usability feature of this library is the ability to add a **`DISPLAY_OUTPUT`** attribute to detail objects. By default, _passing tests do not output details_, while _non-passing tests do_. To override this behavior, make sure the detail object has an attribute called `DISPLAY_OUTPUT: true/false`.
+   A key usability feature of this library is the ability to add a **`DISPLAY_OUTPUT`** attribute to detail objects. By default, _passing tests do not output details_, while _non-passing tests do_. To override this behavior, make sure the detail object has an attribute called `DISPLAY_OUTPUT: true/false`.
 
 ## API
 
@@ -151,7 +171,7 @@ test('suite name', t => {
   const passing = false
 
   t.ok(passing, 'test description')
-  
+
   if (!passing) {
     t.info({
       message: 'Detail',
@@ -311,6 +331,7 @@ test('suite name', t => {
 ```sh
 not ok 1 - No problems
 ```
+
 _(notice this is `not ok`)_
 
 It is possible to supply an optional `todo` or `skip` directive.
@@ -476,4 +497,4 @@ not ok 1 - message
 
 ---
 
-MIT license. Written by Corey Butler, Copyright 2020.  
+MIT license. Written by Corey Butler, Copyright 2020.

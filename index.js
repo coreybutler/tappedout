@@ -11,14 +11,16 @@ let testid = 0
 
 async function run () {
   const tests = ref.get('tests') || []
+  const logger = ref.get('logger') || console
 
   // Identify TAP version
-  console.log('TAP version 13')
+  logger.log('TAP version 13')
 
   // Run tests sequentially
   for (const test of tests) {
     await new Promise((resolve, reject) => {
-      const suite = new TestSuite(test[0], resolve, reject, testid, test.length === 3 ? test[2] : null)
+      const suite = new TestSuite(test[0], resolve, reject, testid, test.length === 3 ? test[2] : null, logger)
+
       try {
         test[1](suite)
       } catch (e) {
@@ -30,13 +32,13 @@ async function run () {
       }
     }).then(count => { testid += count })
       .catch(e => {
-        console.log(`Bail out! ${e.message}`)
+        logger.log(`Bail out! ${e.message}`)
         process.exit(1)
       })
   }
 
   // Output the final plan on "next tick"
-  console.log(`1..${testid}`)
+  logger.log(`1..${testid}`)
 }
 
 export { test as default, test }
