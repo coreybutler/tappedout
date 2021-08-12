@@ -31,7 +31,7 @@ import test from 'tappedout'
 ![Version](https://img.shields.io/npm/v/tappedout?label=Latest&style=for-the-badge)
 
 ```javascript
-import test from 'https://cdn.pika.dev/tappedout^0.0.1' // <-- Update the version
+import test from 'https://cdn.pika.dev/tappedout^1.0.0' // <-- Update the version
 ```
 
 ## Usage
@@ -462,6 +462,58 @@ ok 1 - a-ok
 ```
 
 This method is very useful when a specific test within your suite breaks, allowing you to run just the tests you care about.
+
+### test.before()
+
+This test will run once, before the test suite. It will not output TAP results unless one of the API functions is used (i.e. anything except `end()`). This function is used to do a one-time setup/preparation before executing tests.
+
+```javascript
+import test from 'tappedout'
+
+test.before(t => {
+  setupDatabase()
+  t.end()
+})
+```
+
+### test.after()
+
+This test will run once, after all tests are complete. It will not output TAP results unless one of the API functions is used (i.e. anything except `end()`). This function is used to do a one-time cleanup/teardown after executing tests.
+
+```javascript
+import test from 'tappedout'
+
+test.after(t => {
+  destroyDatabase()
+  t.end()
+})
+```
+
+### test.beforeEach()
+
+This test will run before each test. It will not output TAP results unless one of the API functions is used (i.e. anything except `end()`). This function is used to do common setup/preparation for each test.
+
+```javascript
+import test from 'tappedout'
+
+test.beforeEach(t => {
+  createCustomDatabaseTable()
+  t.end()
+})
+```
+
+### test.afterEach()
+
+This test will run after each test. It will not output TAP results unless one of the API functions is used (i.e. anything except `end()`). This function is used to do common cleanup/teardown for each test.
+
+```javascript
+import test from 'tappedout'
+
+test.beforeEach(t => {
+  deleteCustomDatabaseTable()
+  t.end()
+})
+```
 
 ## Specifying Details (Example)
 

@@ -17,10 +17,34 @@ function check (condition, msg = null) {
   }
 }
 
+test.before(t => {
+  t.ok(true, 'before')
+  check(queue[1].trim() === 'ok 1 - before', 'Successfully executed before method.')
+  queue = [queue[0]]
+  t.end()
+})
+
+test.after(t => {
+  t.ok(true, 'after')
+  check(queue[1].trim() === `ok ${t.start + 1} - after`, 'Successfully executed after method.')
+  queue = [queue[0]]
+  t.end()
+})
+
+test.beforeEach(t => {
+  check(true, `Pre-test ${t.start + 1} executed`)
+  t.end()
+})
+
+test.afterEach(t => {
+  check(true, `Post-test ${t.start} executed`)
+  t.end()
+})
+
 // pass
 test('pass', t => {
   t.pass('passed')
-  check(queue[2] === 'ok 1 - passed', 'Successful test output recognized.')
+  check(queue[2] === `ok ${t.start + 1} - passed`, 'Successful test output recognized.')
   queue = [queue[0]]
   t.end()
 })
@@ -50,6 +74,8 @@ test('ok()', t => {
   check(queue[1] === '# ok()', 'Test suite comment recognized.')
   check(queue[2] === `ok ${t.start + 1} - yes`, 'Successful test recognized.')
   check(queue[3] === `not ok ${t.start + 2} - no`, 'Unsuccessful test recognized.')
+
+  queue = [queue[0]]
 
   t.end()
 })
