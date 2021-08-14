@@ -40,6 +40,9 @@ async function run () {
   const beforeEach = ref.get('beforeEach')
   const afterEach = ref.get('afterEach')
 
+  // Signal start of test execution
+  ref.get('emitter').emit('start')
+
   // Identify TAP version
   logger.log('TAP version 13')
 

@@ -621,6 +621,28 @@ This can be used to run all queued tests. This is often used as an [alternative 
 
 The `onEnd` method runs after the tests have completed. No further TAP output will be produce. This method is useful for triggering scripts that run after all testing is complete.
 
+This is a convenience method, equivalent to `test.on('end', <callback>)`.
+
+### test.on('event', `<handlerFn>`)
+
+The following events may be emitted:
+
+1. `test.create` - test suite created/queued
+2. `start` - test runner starts
+3. `end` - test runner ends/completes
+4. `test.start` - a specific test suite starts
+5. `test.end` - a specific test suite ends/completes
+6. `test.abort` - abort a specific test
+7. `test.skip` - skipped a test
+
+### test.once('event', `<handlerFn>`)
+
+Same as `test.on()`, but the handler is removed after it is used.
+
+### test.emit('event', `<args>`)
+
+Emit a standard or custom event. This is primarily used for internal operations and/or orchestrating advanced/custom test runners.
+
 ---
 
 MIT license. Written by Corey Butler, Copyright 2020.
