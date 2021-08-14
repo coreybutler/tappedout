@@ -74,6 +74,11 @@ jobs:
       #     release-tag: ${{ steps.autotagger.outputs.tagname }}
 
         # Use this action to publish a single module to npm.
+      - name: metadata
+        run: |
+          pwd
+          ls -l
+
       - name: Publish to npm
         id: publish
         if: success() && steps.autotagger.outputs.tagcreated == 'yes' && steps.release.outputs.id != ''

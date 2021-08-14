@@ -603,6 +603,20 @@ not ok 1 - message
 1..1
 ```
 
+## Other Features
+
+The following features can be used to create custom test runners.
+
+### test.clear()
+
+The clear method will remove all tests from the test runner. This is most commonly used for programmatically running multiple tests suites, each with their own output.
+
+### test.start(`<reset>`)
+
+This can be used to run all queued tests. This is often used as an [alternative startup](#alternative-startup) strategy, or after clearing tests.
+
+`<reset>` determines whether the test counter is reset. The test counter is used to compare the planned number of tests with the actual number of tests for a series of tests. `<reset>` is `false` by default. Setting it to true will reset the counter as though the test runner is starting over from the beginning.
+
 ---
 
 MIT license. Written by Corey Butler, Copyright 2020.
