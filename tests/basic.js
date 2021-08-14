@@ -1,5 +1,7 @@
 import test from '../index.js'
 
+test.autostart = false
+
 // Test harness
 let queue = []
 const log = console.log
@@ -79,6 +81,8 @@ test('ok()', t => {
 
   t.end()
 })
+
+test.start()
 
 // test('a', t => {
 //   // t.plan(3)

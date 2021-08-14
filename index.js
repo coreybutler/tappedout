@@ -2,10 +2,12 @@ import { ref, initialized } from './lib/runner.js'
 import test from './lib/test.js'
 import TestSuite from './lib/suite.js'
 
-if (!initialized) {
-  ref.set('initialized', true)
-  setTimeout(run, 300)
-}
+setTimeout(() => {
+  if (!initialized && ref.get('autostart')) {
+    ref.set('initialized', true)
+    run()
+  }
+}, 300)
 
 let testid = 0
 
@@ -92,5 +94,7 @@ function abort (e) {
     }
   }
 }
+
+ref.set("start", run)
 
 export { test as default, test, TestSuite as Runner }

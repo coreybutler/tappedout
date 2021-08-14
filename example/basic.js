@@ -1,5 +1,6 @@
 import test from '../index.js'
 
+// test.autostart = false
 // test.logger = {
 //   log () {
 //     console.log('MY LOG:', ...arguments)

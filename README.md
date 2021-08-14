@@ -2,11 +2,13 @@
 
 A simple "back to basics" JavaScript test runner for producing [TAP-formatted](https://testanything.org) results.
 
-It is built using ES module syntax, drawing _inspiration_ from the [tape](https://github.com/substack/tape) library. It shares several similarities, but should not be considered "the same".
+It is built using ES module syntax, drawing _inspiration_ from the [tape](https://github.com/substack/tape) library. It shares several similarities, but should not be considered "the same". The API has several different methods. Furthermore, tappedout is runtime-agnostic. It will work in browsers, Node, Deno, and any other ECMAScript-compliant (ES5+) runtime.
 
 **This is for library authors...**
 
-There are many beautiful test runners. They often come at the price of requiring many dependencies, which may be fine for a single complex project. I primarily write libraries, meaning lots of smaller repos containing small bits of code. The black hole of `node_modules` was way too heavy when multipled across multiple projects, and I grew very frustrated with all the needless pre-processing/transpiling just to run tests. Translation: my patience was tapped out with one too many rollup/browserify processes.
+There are many beautiful test runners. They often come at the price of requiring many dependencies, which may be fine for a single complex project. Library authors typically maintain multiple smaller repos containing smaller bits of code. The black hole of `node_modules` was way too heavy when multiplied across multiple projects. Since tappedout is written using ECMAScript standard modules, there is no need for pre-processing/transpiling just to run tests.
+
+The name came from frustration. My patience was tapped out with one too many rollup/browserify processes.
 
 ## Getting tappedout
 
@@ -75,6 +77,60 @@ test('title', t => { ... }})
 ```
 
 The most common reason for overriding the output mechanism is for writing results to a file.
+
+**Pretty Output:**
+
+This library only outputs raw TAP results.
+
+Combine it with a post-processor for "pretty" output.
+
+<detail>
+  <summary>TAP Post-Processors/Formatters</summary>
+  <ol>
+    <li><a href="https://github.com/scottcorgan/tap-spec">tap-spec</a></li>
+    <li><a href="https://github.com/scottcorgan/tap-dot">tap-dot</a></li>
+    <li><a href="tps://github.com/substack/faucet">faucet](</a></li>
+    <li><a href="https://github.com/juliangruber/tap-bail">tap-bail</a></li>
+    <li><a href="olor](https://github.com/kirbysayshi/tap-browser-color">tap-browser</a></li>
+    <li><a href="https://github.com/gummesson/tap-json">tap-json</a></li>
+    <li><a href="https://github.com/derhuerst/tap-min">tap-min</a></li>
+    <li><a href="https://github.com/calvinmetcalf/tap-nyan">tap-nyan</a></li>
+    <li><a href="https://www.npmjs.org/package/tap-pessimist">tap-pessimist</a></li>
+    <li><a href="https://github.com/toolness/tap-prettify">tap-prettify</a></li>
+    <li><a href="https://github.com/shuhei/colortape">colortape</a></li>
+    <li><a href="https://github.com/aghassemi/tap-xunit">tap-xunit</a></li>
+    <li><a href="https://github.com/namuol/tap-difflet">tap-difflet</a></li>
+    <li><a href="https://github.com/gritzko/tape-dom">tape-dom</a></li>
+    <li><a href="https://github.com/axross/tap-diff">tap-diff</a></li>
+    <li><a href="https://github.com/axross/tap-notify">tap-notify</a></li>
+    <li><a href="https://github.com/zoubin/tap-summary">tap-summary</a></li>
+    <li><a href="https://github.com/Hypercubed/tap-markdown">tap-markdown</a></li>
+    <li><a href="https://github.com/gabrielcsapo/tap-html">tap-html</a></li>
+    <li><a href="https://github.com/mcnuttandrew/tap-react-browser">tap-react-browser</a></li>
+    <li><a href="https://github.com/dhershman1/tap-junit">tap-junit</a></li>
+    <li><a href="https://github.com/MegaArman/tap-nyc">tap-nyc</a></li>
+    <li><a href="https://github.com/Sceat/tap-spec-emoji">tap-spec (emoji patch)</a></li>
+    <li><a href="https://github.com/rgruesbeck/tape-repeater">tape-repeater</a></li>
+    <li><a href="https://github.com/Josenzo/tabe">tabe</a></li>
+  </ol>
+
+</detail>
+
+***Alternative startup:***
+
+By default, tappedout automatically runs tests. This behavior can be overridden by setting `autostart` to `false`, then manually invoking the `start()` method.
+
+```javascript
+import test from 'tappedout'
+
+test.autostart = false
+
+test('title 1', t => { ... }})
+test('title 2', t => { ... }})
+test('title 3', t => { ... }})
+
+test.start()
+```
 
 ## Overview: How to Make Simple/Awesome Tests
 
