@@ -79,6 +79,9 @@ async function run () {
 
   // Output the final plan on "next tick"
   logger.log(`1..${testid}`)
+
+  // Signal end of test execution
+  ref.get('emitter').emit('end')
 }
 
 function abort (e) {

@@ -1,6 +1,7 @@
 import test from '../index.js'
 
 test.autostart = false
+test.onEnd(() => check(true, 'test.onEnd ran'))
 
 // Test harness
 let queue = []

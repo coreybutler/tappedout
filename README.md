@@ -617,6 +617,10 @@ This can be used to run all queued tests. This is often used as an [alternative 
 
 `<reset>` determines whether the test counter is reset. The test counter is used to compare the planned number of tests with the actual number of tests for a series of tests. `<reset>` is `false` by default. Setting it to true will reset the counter as though the test runner is starting over from the beginning.
 
+### test.onEnd(`<callback>`)
+
+The `onEnd` method runs after the tests have completed. No further TAP output will be produce. This method is useful for triggering scripts that run after all testing is complete.
+
 ---
 
 MIT license. Written by Corey Butler, Copyright 2020.
