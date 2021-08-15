@@ -84,14 +84,14 @@ This library only outputs raw TAP results.
 
 Combine it with a post-processor for "pretty" output.
 
-<detail>
+<details>
   <summary>TAP Post-Processors/Formatters</summary>
   <ol>
     <li><a href="https://github.com/scottcorgan/tap-spec">tap-spec</a></li>
     <li><a href="https://github.com/scottcorgan/tap-dot">tap-dot</a></li>
-    <li><a href="tps://github.com/substack/faucet">faucet](</a></li>
+    <li><a href="https://github.com/substack/faucet">faucet</a></li>
     <li><a href="https://github.com/juliangruber/tap-bail">tap-bail</a></li>
-    <li><a href="olor](https://github.com/kirbysayshi/tap-browser-color">tap-browser</a></li>
+    <li><a href="https://github.com/kirbysayshi/tap-browser-color">tap-browser-color</a></li>
     <li><a href="https://github.com/gummesson/tap-json">tap-json</a></li>
     <li><a href="https://github.com/derhuerst/tap-min">tap-min</a></li>
     <li><a href="https://github.com/calvinmetcalf/tap-nyan">tap-nyan</a></li>
@@ -114,7 +114,7 @@ Combine it with a post-processor for "pretty" output.
     <li><a href="https://github.com/Josenzo/tabe">tabe</a></li>
   </ol>
 
-</detail>
+</details>
 
 ***Alternative startup:***
 
