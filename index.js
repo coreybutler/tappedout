@@ -21,7 +21,6 @@ function runner (fn, name = null, directive = null) {
       fn(suite)
     } catch (e) {
 
-      process.stdout.write(e.message)
       suite.fail(e.stack.split('\n')[0].trim(), {
         stack: '| \n  ' + e.stack
       })
