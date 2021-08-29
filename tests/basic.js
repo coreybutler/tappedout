@@ -20,7 +20,10 @@ function check (condition, msg = null) {
   }
 }
 
+check(!test.running, 'Runner indicates it is not running when it is not.')
+
 test.before(t => {
+  check(test.running === true, 'Runner indicates it is running when it is.')
   t.ok(true, 'before')
   check(queue[1].trim() === 'ok 1 - before', 'Successfully executed before method.')
   queue = [queue[0]]

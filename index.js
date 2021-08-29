@@ -2,6 +2,8 @@ import { ref, initialized } from './lib/runner.js'
 import test from './lib/test.js'
 import TestSuite from './lib/suite.js'
 
+ref.set('running', false)
+
 setTimeout(() => {
   if (!initialized && ref.get('autostart')) {
     ref.set('initialized', true)
@@ -31,6 +33,13 @@ function runner (fn, name = null, directive = null) {
 }
 
 async function run () {
+  // Prevent running more than once
+  if (ref.get('running')) {
+    return
+  }
+
+  ref.set('running', true)
+
   const tests = ref.get('tests') || []
   const logger = ref.get('logger') || console
   const TestRunner = ref.get('runner') || TestSuite
@@ -48,6 +57,7 @@ async function run () {
   // Short circuit if there are no tests
   if (tests.length === 0) {
     logger.log('Bail out! no tests')
+    ref.set('running', false)
     return
   }
 
@@ -83,11 +93,14 @@ async function run () {
   logger.log(`1..${testid}`)
 
   // Signal end of test execution
+  ref.set('running', false)
   ref.get('emitter').emit('end')
 }
 
 function abort (e) {
   (ref.get('logger') || console).log(`Bail out! ${e.message}`)
+
+  ref.set('running', false)
 
   try {
     process.exit(1)
