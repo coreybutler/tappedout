@@ -11,13 +11,13 @@ setTimeout(() => {
   }
 }, 300)
 
-let testid = 0
+ref.set('testid', 0)
 
 function runner (fn, name = null, directive = null) {
   const TestRunner = ref.get('runner') || TestSuite
 
   return new Promise((resolve, reject) => {
-    const suite = new TestRunner(name, resolve, reject, testid, directive, ref.get('logger') || console)
+    const suite = new TestRunner(name, resolve, reject, ref.get('testid'), directive, ref.get('logger') || console)
 
     try {
       fn(suite)
@@ -75,7 +75,7 @@ async function run () {
 
     await
       runner(test[1], test[0], test.length === 3 ? test[2] : null)
-      .then(count => { testid += count })
+      .then(count => { ref.set('testid', ref.get('testid') + count) })
       .catch(abort)
 
     // Execute pre-tests
@@ -90,7 +90,7 @@ async function run () {
   }
 
   // Output the final plan on "next tick"
-  logger.log(`1..${testid}`)
+  logger.log(`1..${ref.get('testid')}`)
 
   // Signal end of test execution
   ref.set('running', false)
