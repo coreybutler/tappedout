@@ -643,6 +643,12 @@ Same as `test.on()`, but the handler is removed after it is used.
 
 Emit a standard or custom event. This is primarily used for internal operations and/or orchestrating advanced/custom test runners.
 
+### test.running
+
+`returns boolean`
+
+Determines whether the test runner is actively running or not.
+
 ---
 
 MIT license. Written by Corey Butler, Copyright 2020.
