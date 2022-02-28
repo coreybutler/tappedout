@@ -139,15 +139,15 @@ test.start()
 The API is very simple, yet very powerful. There are some simple design principles that can make the experience of testing great. Write less code, more naturally.
 
 1. **Directives**
-   [TAP directives](https://testanything.org/tap-version-13-specification.html#directives) are special/optional "notes" in the output. There are only two options: `skip` and `todo`. These directives can be added/removed throughout the development lifecycle, making it easier to focus on the tests that matter. This can be really helpful as test suites grow. Many methods in this library support a directive option, and there are some special functions for applying directives in bulk (`test.only` and `test.skip`).`<br/><br/>`
+   [TAP directives](https://testanything.org/tap-version-13-specification.html#directives) are special/optional "notes" in the output. There are only two options: `skip` and `todo`. These directives can be added/removed throughout the development lifecycle, making it easier to focus on the tests that matter. This can be really helpful as test suites grow. Many methods in this library support a directive option, and there are some special functions for applying directives in bulk (`test.only` and `test.skip`).<br/>
 2. **Detailed Output**
-   Sometimes it is valuable to have detailed information about a particular test, such as info about why a test failed. The TAP protocol allows this to be [embedded in the output, via YAML](https://testanything.org/tap-version-13-specification.html#yaml-blocks). `<br/><br/>`
+   Sometimes it is valuable to have detailed information about a particular test, such as info about why a test failed. The TAP protocol allows this to be [embedded in the output, via YAML](https://testanything.org/tap-version-13-specification.html#yaml-blocks).<br/>
 
    Many of the methods in this library support key/value (JSON) arguments that will be properly embedded in the output.
 
    - `failinfo()` and `expect()` autocreate detail objects.
    - `info()` supports custom details.
-   - All assertion/response methods support custom detail objects, wherever you see "`object` detail" as a method parameter.`<br/><br/>`
+   - All assertion/response methods support custom detail objects, wherever you see "`object` detail" as a method parameter.<br/>
 
    A key usability feature of this library is the ability to add a **`DISPLAY_OUTPUT`** attribute to detail objects. By default, _passing tests do not output details_, while _non-passing tests do_. To override this behavior, make sure the detail object has an attribute called `DISPLAY_OUTPUT: true/false`.
 
