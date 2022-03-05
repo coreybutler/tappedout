@@ -1,4 +1,5 @@
 import test from '../index.js'
+import { ref } from '../lib/runner.js';
 
 test.autostart = false
 test.onEnd(() => check(true, 'test.onEnd ran'))
@@ -85,6 +86,29 @@ test('ok()', t => {
 
   t.end()
 })
+
+test('EventEmitter .once handler should not be fired more than once', function(t){
+  let eventEmitter = ref.get('emitter');
+  let handlerCalled = 0;
+
+  eventEmitter.once('testEmit', () => handlerCalled++);
+
+  eventEmitter.emit('testEmit');
+
+  check(handlerCalled === 1, 'Handler should have been called once');
+
+  eventEmitter.emit('testEmit');
+
+  check(handlerCalled === 1, 'Handler should have been called once (after second emit)');
+
+  eventEmitter.emit('testEmit');
+
+  check(handlerCalled === 1, 'Handler should have been called once (after third emit)');
+
+  queue = [queue[0]]
+
+  t.end();
+});
 
 test.start()
 
