@@ -482,7 +482,7 @@ ok 1 # skip a-ok  <----- Notice "skip"
 This is the same as `test()`, but with the `todo` directive applied to every test within the suite.
 
 ```javascript
-test.skip('suite name', t => {
+test.todo('suite name', t => {
   t.ok(true, 'a-ok')
 })
 ```
@@ -609,7 +609,7 @@ The following features can be used to create custom test runners.
 
 ### test.clear()
 
-The clear method will remove all tests from the test runner. This is most commonly used for programmatically running multiple tests suites, each with their own output.
+The clear method will remove all tests from the test runner. This is most commonly used for programmatically running multiple test suites, each with their own output.
 
 ### test.start(`<reset>`)
 
@@ -651,4 +651,4 @@ Determines whether the test runner is actively running or not.
 
 ---
 
-MIT license. Written by Corey Butler, Copyright 2020.
+MIT license. Written by Corey Butler, Copyright 2020-2022.
