@@ -1,8 +1,12 @@
 {
   "name": "tappedout",
-  "version": "1.1.9",
+  "version": "1.1.10",
   "description": "A simple \"back to basics\" JavaScript test runner for producing TAP-formatted results. Built using ES Modules.",
-  "main": "index.js",
+  "exports": {
+    ".": {
+      "import": "index.js"
+    }
+  },
   "scripts": {
     "test": "node tests/basic.js",
     "test:deno": "deno run tests/basic.js"
