@@ -61,7 +61,7 @@ not ok 2 - I am still OK.
 
 **_Alternative output formats:_**
 
-TAP (Test Anything Protocol) is a language-agnostic format for documenting test results. However, there are [many different formatters](https://github.com/search?l=JavaScript&q=tap+format&type=Repositories) available if you search npm/github. It's actually pretty easy to create your own using [tap-parser](https://github.com/tapjs/tap-parser) or a similar library.
+TAP (Test Anything Protocol) is a language-agnostic format for documenting test results. There is a companion formatting tool, [tapfmt](https://github.com/coreybutler/tapfmt), providing a language/runtime-agnostic standalone formatter. There are also [many different runtime-specific formatters](https://github.com/search?l=JavaScript&q=tap+format&type=Repositories) available if you search npm/github. It's relatively easy to create your own using [tap-parser](https://github.com/tapjs/tap-parser) or a similar library.
 
 TAP producers generally output to stdout/stderr (console). However, there are some circumstances where an alternative output mechanism is desired. The `tappedout` library supports overriding the default output mechanism. For example, to use a custom handler, set the logger as:
 
