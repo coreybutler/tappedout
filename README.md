@@ -1,6 +1,6 @@
 # tappedout
 
-A simple "back to basics" JavaScript test runner for producing [TAP-formatted](https://testanything.org) results.
+A simple "back to basics" JavaScript test runner for producing [TAP-formatted](https://testanything.org) results. It is runtime agnostic and built using ES Modules.
 
 It is built using ES module syntax, drawing _inspiration_ from the [tape](https://github.com/substack/tape) library. It shares several similarities, but should not be considered "the same". The API has several different methods. Furthermore, tappedout is runtime-agnostic. It will work in browsers, Node, Deno, and any other ECMAScript-compliant (ES5+) runtime.
 
