@@ -56,6 +56,13 @@ test('pass', t => {
   t.end()
 })
 
+test('pass without message should not have trailing "-"', t => {
+  t.pass();
+  check(queue[2] === `ok ${t.start + 1}`, 'Successful test output recognized.');
+  queue = [queue[0]];
+  t.end();
+});
+
 // fail
 test('fail', t => {
   t.fail('failed')
@@ -63,6 +70,13 @@ test('fail', t => {
   queue = [queue[0]]
   t.end()
 })
+
+test('fail without message should not have trailing "-"', t => {
+  t.fail();
+  check(queue[2] === `not ok ${t.start + 1}`, 'Unsuccessful test output recognized.');
+  queue = [queue[0]];
+  t.end();
+});
 
 // comment
 test('comment', t => {
